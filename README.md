@@ -88,3 +88,5 @@ An end-to-end system for stock recommendation using two different prediction mod
 3. Install dependencies:
    ```bash
    pip install -r requirements.txt 
+
+   
