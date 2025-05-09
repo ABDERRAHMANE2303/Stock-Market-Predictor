@@ -3,7 +3,7 @@ Flask-CORS==5.0.1
 prophet==1.1.6
 tensorflow==2.18.0
 pandas==2.2.3
-numpy==2.2.5
+numpy>=1.26.0,<2.1.0
 scikit-learn==1.6.1
 yfinance==0.2.59
 gunicorn==23.0.0
