@@ -1,98 +1,90 @@
-# **STOCK MARKET PREDICTOR**
+# 🚀 STOCK MARKET PREDICTOR
 
-# **1. Historical Stock Data APIs**
-
-- **Yahoo Finance (via `yfinance` in Python)**
-    - Easy to use for stock data retrieval.
-    - Example: `yfinance.download("AAPL", start="2023-01-01", end="2024-01-01")`
-- **Alpha Vantage**
-    - Free tier: 5 requests per minute, 500 per day.
-    - [Website](https://www.alphavantage.co/)
-- **Polygon.io (Free tier available)**
-    - Real-time and historical stock data.
-    - [Website](https://polygon.io/)
+A smart web app to help you decide whether to **buy** a stock — powered by AI models, live data, and clean UI.
 
 ---
 
-# **2. News & Sentiment Analysis APIs(optional)**
+## 🔧 Project Overview
 
-- **NewsAPI**
-    - Free tier includes recent headlines from major sources.
-    - [Website](https://newsapi.org/)
-- **GNews API**
-    - A solid alternative with fewer restrictions than NewsAPI.
-    - [Website](https://gnews.io/)
-- **FinBERT (Sentiment Analysis Model)**
-    - A pretrained BERT model fine-tuned on financial text for sentiment analysis.
-    - Can be used locally with HuggingFace Transformers.
-    - [Website](https://huggingface.co/ProsusAI/finbert)
-- **MeaningCloud**
-    - Offers sentiment and topic extraction with a free tier.
-    - [Website](https://www.meaningcloud.com/products/sentiment-analysis)
-- scrapping informations from dukascopy (optional)
+An end-to-end system for stock recommendation using two different prediction models and a frontend dashboard.
 
 ---
 
-# **3. Prediction Logic**
+## 🖥️ Frontend (React)
 
-- **Buying vs Selling**:
-    - **Buying** is the focus of the prediction model.
-    - If the model predicts a stock price might rise, the recommendation is **to buy**.
-    - The system will also output a **confidence level** for the prediction.
-- the model will predict wether u should BUY or not .
-
----
-
-# **4. Tech Stack**
-
-- **Language**: Python (best ecosystem for ML and data processing)
-- **Libraries**:
-    - `pandas`, `numpy`, `scikit-learn` – for data preprocessing and machine learning.
-    - `yfinance`, `requests`, `newsapi` – for stock and news data fetching.
-    - `transformers` – for NLP models like FinBERT.
-    - `matplotlib`, `plotly` – for data visualization.
+- Users can search for a stock by symbol.
+- Displays predictions from both **LSTM** and **Prophet** models.
+- Shows a **Buy/Don't Buy** decision along with **confidence levels**.
+- Fetches related stock news via **NewsAPI** or **GNews** directly from the frontend.
+- Provides a clean, modern UI with loading states and error handling.
 
 ---
 
-# **5. Models to Use**
+## 🧠 Backend (Flask)
 
-- **Time Series Prediction**:
-    - The stock price prediction will focus on time series data.
-    - prophet facebook
-    - hugging faces
-    - **Long Short-Term Memory Networks (LSTM)** are ideal for this task. (bi)
-    - Steps:
-        - **Normalize** the data.
-        - season
-        - Use a **sliding window** to create sequences for LSTM input.
-        - **Train** the model to predict future stock prices.
+- Flask mini API that serves predictions from:
+  - ✅ Trained LSTM model
+  - ✅ Trained Prophet model
+- Receives requests from the frontend and returns:
+  - Predicted stock movement
+  - Buy signal
+  - Confidence score
+- Backend does not handle news or frontend assets — only model inference.
 
 ---
 
-# **6. Key Terminology**
+## 📊 Machine Learning Models
 
-| Term | Meaning | Example (for TSLA on a Monday) |
-| --- | --- | --- |
-| 🟢 **Open** | The price the stock started trading at when the market opened. | `$195.00` |
-| 🔴 **Close** | The price the stock ended trading at when the market closed. | `$198.30` |
-| 🔼 **High** | The highest price the stock reached during the trading day. | `$199.50` |
-| 🔽 **Low** | The lowest price the stock reached during the trading day. | `$194.75` |
-| 📊 **Volume** | The total number of shares traded during the day. Indicates how active the stock was. | `5,200,000 shares` |
+### 📈 Prophet
+- Model by Facebook for time-series forecasting.
+- Requires columns `ds` (date) and `y` (value).
+- Great for trend/seasonality but not very reactive.
+
+### 🔁 LSTM
+- Neural network-based approach using TensorFlow/Keras.
+- Uses sequences of scaled prices for training.
+- More sensitive to short-term variations.
 
 ---
 
-# **7. App Functionality**
+## 📚 Workflow & Structure
 
-- **Input**:
-    - User inputs the stock symbol (e.g., `AAPL`).
-- **Data Fetching**:
-    - The app fetches the stock’s historical data via the chosen API (Yahoo Finance, Alpha Vantage, etc.).
-- **Training**:
-    - The app processes the data, normalizes it, and prepares sequences for training the model.
-- **Prediction**:
-    - The model predicts whether to **buy** the stock with a **confidence level and a reason**.
-- **News Integration**:
-    - The app fetches the latest news related to the stock via a news API (NewsAPI, GNews API).
-    - This data is displayed alongside the prediction to assist the user in making a decision.
-- **Pretrained Models**:
-    - Some popular stocks can have pretrained models, allowing faster predictions without retraining each time.
+- **Jupyter Notebooks** used for:
+  - Data gathering & cleaning
+  - Preprocessing for both models
+  - Model training & saving
+  - Benchmarking results
+- **Shared cleaned dataset** stored as `stocks_cleaned.csv`
+- Each model may have separate preprocessing based on requirements
+
+---
+
+## 🧪 Benchmarking
+
+- Run on a historical test set
+- Compare **LSTM vs Prophet** using:
+  - RMSE, MAE, directional accuracy
+  - Buy decision precision
+  - Visual plots
+- Final notebook displays a summary table + recommendation
+
+---
+
+## 🛠 Tech Stack
+
+- **Frontend**: React, Axios, Tailwind
+- **Backend**: Flask, Python 3.11+
+- **ML Libraries**: TensorFlow, Keras, Prophet, scikit-learn, pandas
+- **Data Source**: yfinance (Yahoo Finance API)
+- **Optional News APIs**: NewsAPI / GNews / Dukascopy (scraping)
+- **Sentiment** (optional): FinBERT via HuggingFace
+
+---
+
+## 📦 Setup
+
+1. Clone the repo
+2. Create Python 3.11 virtual environment
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt 
