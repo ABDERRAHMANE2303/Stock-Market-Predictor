@@ -125,3 +125,37 @@ By following these steps, the data is now ready to be fed into the Prophet model
   - Metadata for inverse scaling (`_min`, `_max` for each feature)
   
 This prepared data is now ready for training the LSTM model, where the model will learn patterns from the scaled input features to predict the next day's stock price and classify the price direction (up or down).
+
+## 📥 Preparing Data for XGBoost
+
+- The data is prepared for the XGBoost model by engineering relevant time-based and price-based features to help the model capture temporal and trend-related patterns. The process includes sorting, feature creation, and ensuring consistent formatting.
+
+### 🧹 Data Preparation Steps
+
+- **Copy the dataframe**  
+  ➤ A copy of the dataframe is created to preserve the original data from unintended modifications.
+
+- **Convert the 'date' column to datetime**  
+  ➤ Ensures the `date` column is in proper datetime format (`pd.to_datetime`) for consistent time-based feature extraction.
+
+- **Sort data chronologically**  
+  ➤ Data is sorted by the `date` column to maintain time order, which is essential for building time-dependent features and avoiding data leakage.
+
+- **Generate time-based features**  
+  ➤ Extracted from the `date` column to give the model awareness of temporal patterns:
+  - `day_of_week`: Day of the week (0–6)
+  - `month`: Calendar month (1–12)
+  - `day_of_month`: Day in the month (1–31)
+  - `quarter`: Financial quarter (1–4)
+  - `is_month_start`: Boolean indicating the start of a month
+  - `is_month_end`: Boolean indicating the end of a month
+
+- **Add rolling moving averages**  
+  ➤ Technical indicators that help capture trends and smooth out short-term fluctuations:
+  - `ma5`: 5-day moving average of closing prices
+  - `ma20`: 20-day moving average of closing prices  
+  ➤ These are computed only if they’re not already present in the data.
+
+- **(Optional) Add target columns**  
+  ➤ Depending on model setup, additional columns like `target` or `price_up` (1 if price increased next day) may be added later for supervised learning.
+
