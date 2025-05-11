@@ -1,5 +1,6 @@
 venv
-data/cleaned/*.csv
-data/lstm/*.csv
-data/prophet/*.csv
-data/xgboost/*.csv
+data/cleaned/
+data/lstm/
+data/prophet/
+data/xgboost/
+models/
