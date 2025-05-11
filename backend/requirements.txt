@@ -1,9 +1,17 @@
-Flask==3.1.0
-Flask-CORS==5.0.1
-prophet==1.1.6
-tensorflow==2.18.0
-pandas==2.2.3
-numpy>=1.26.0,<2.1.0
-scikit-learn==1.6.1
-yfinance==0.2.59
-gunicorn==23.0.0
+Flask==3.0.3 # Let's use a very stable Flask version first, you can try 3.1.0 later
+Flask-CORS==4.0.1 # Stable version
+# prophet==1.1.6 # If 1.1.5 works, stick with it, otherwise try 1.1.6
+# prophet==1.1.5 # Often more readily available wheel for Windows
+# pandas==2.2.3
+# numpy>=1.26.0,<2.1.0 # e.g., numpy==1.26.4 will be picked by pip
+# scikit-learn==1.5.0 # Let's use a stable scikit-learn, you can try 1.6.1 later
+# yfinance==0.2.38 # Stable yfinance
+
+# # TensorFlow: Try 2.15.0 first. It has good compatibility with Python 3.9-3.11 (64-bit)
+# tensorflow==2.15.0
+# If tensorflow==2.15.0 still fails, and you've confirmed Python 3.9-3.11 64-bit,
+# you can try letting pip choose the latest compatible version by just using:
+# tensorflow
+
+# gunicorn==23.0.0 # Gunicorn is for Linux/macOS deployments. Not typically used/needed for Windows development.
+# For Windows production, consider 'waitress'. For development, Flask's built-in server is fine.
