@@ -1,0 +1,13 @@
+# Preparing Data for XGBoost
+The feature engineering for this stock market dataset aims to create various signals that can capture different aspects of price movement, trend, volatility, and trading activity, making the data more informative for XGBoost.
+
+1.  **Price-based features**: Direct price transformations like daily percentage change (`price_change_pct`), the relative size of the daily trading range (`daily_range_pct`), and where the closing price falls within that range (`price_position`), providing immediate price action context.
+2.  **Trend indicators**: Measure the relationship between current price and its smoothed averages over different periods (5, 20, 50 days). Features like `dist_from_maX` quantify how far the price is from these trends, while binary `maX_gt_maY` features signal moving average crossovers, indicating potential shifts in trend direction.
+3.  **Volume indicators**: Assess trading activity. `volume_change` shows daily volume fluctuation, and `relative_volume` compares current volume to its recent average, highlighting unusual trading interest.
+4.  **Momentum indicators**: Capture the velocity of price changes over short to medium periods (3, 5, 10 days), indicating the strength of recent price movements.
+5.  **Technical indicators**: Incorporate widely used analysis tools. `rsi_14` identifies overbought or oversold conditions, while Bollinger Band features (`bb_width`, `bb_position`) measure volatility and the price's position relative to typical price ranges.
+6.  **Lag features**: Include previous day's closing price, volume, and return, providing simple historical context which is often predictive in time series data.
+7.  **Cyclical time features**: Encode the day of the week and month using sine and cosine transformations to help the model identify potential cyclical patterns or seasonalities in stock prices.
+8.  **Missing value handling**: Fills any resulting missing values (often created by differencing or rolling calculations at the start of the series) using forward-fill, backward-fill, and finally zero-fill to ensure the dataset is complete for the model.
+
+To sum up, the feature engineering process for this stock data involves generating diverse features beyond simple price/volume, including metrics for price changes, trends, volume analysis, momentum, standard technical indicators (like RSI, Bollinger Bands), historical lagged values, and cyclical time information (day/month). This provides XGBoost with a richer set of inputs to better capture complex patterns in stock market behavior for prediction.
