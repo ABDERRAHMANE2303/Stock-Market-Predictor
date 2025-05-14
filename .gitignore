@@ -1,6 +1,3 @@
 venv
-ml/data/cleaned/
-ml/data/lstm/
-ml/data/prophet/
-ml/data/xgboost/
+ml/data/
 ml/model/
